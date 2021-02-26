@@ -160,9 +160,9 @@ shinyUI(
                            # Variance of alpha proposal distribution
                            numericInputIcon(
                                "tune1", label = NULL,
-                               value = .00005,
+                               value = 5e-5,
                                min = 0,
-                               step = .00005,
+                               step = 5e-5,
                                icon = list("\\( \\alpha \\)"),
                                help_text = "Must be positive."
                            )
@@ -173,9 +173,9 @@ shinyUI(
                            # Variance of theta proposal distribution
                            numericInputIcon(
                                "tune2", label = NULL,
-                               value = .0005,
+                               value = 5e-5,
                                min = 0,
-                               step = .0005,
+                               step = 5e-5,
                                icon = list("\\( \\theta \\)"),
                                help_text = "Must be positive."
                            )
