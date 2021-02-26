@@ -1,0 +1,61 @@
+<html>
+
+<style>
+
+p {
+  font-size: 12px;
+}
+
+ul {
+  font-size: 12px;
+}
+
+</style>
+
+
+<body>
+
+<p><b>Welcome!</b></p>
+
+<p>With this Shiny app, you can calculate <b>Bayes factors</b> for two distributions 
+on some ordinal (e.g., Likert) scale. To analyze your data, you must enter the <b>observed category frequencies</b> 
+for each condition in the first step. The frequencies must be separated by a , (you can also use ; or /). 
+You can <b>plot the data</b> by clicking on the respective button. This
+will create an ROC-type plot and a difference plot for the cumulative
+proportions in the two conditions. Optionally, you can provide category labels
+which will appear in the plot.</p>
+
+<p>The data are modeled as a latent normal distribution where response categories
+correspond to ordered regions on the latent scale (as in SDT). Response
+probabilities correspond to the areas of the latent regions under the curve, 
+and the parameters of interest are the bounds of these regions in each condition. 
+Each bound in each condition is modeled as some grand mean (alpha) and a specific deviation from 
+this grand mean (theta).</p>
+
+<p>We specify four statistical models:</p>
+
+ <ul>
+  <li><b>Unconstrained Model:</b> No constraints on theta (there is an effect but it's not 
+  captured by one relation)</li>
+  <li><b>Dominance Model:</b> All thetas are positive/negative (there is an effect in one direction)</li>
+  <li><b>Shift Model:</b> There is one theta for all bounds (there is a constant effect)</li>
+  <li><b>Null Model:</b> Theta is 0 (there is no difference between conditions)</li>
+</ul> 
+
+<p>To compare these models by means of Bayes factors, you need to specify <b>priors</b>
+on the alphas and thetas. These are centered normal distributions with variance 
+b<sub>1</sub> and b<sub>2</sub>. Define these variances to express your prior beliefs.
+<b>Note that you must carefully choose the prior settings for the case
+at hand</b>. Your choice will affect your conclusions (as it should). </p>
+
+<p>You can also specify the settings of the MCMC sampling algorithm. The number of 
+posterior samples must be sufficiently high (e.g., 200,000). By default, the variances of the
+proposal distributions will be tuned before the sampling process to achieve an acceptance
+rate of about 30%. Optionally, you can disable auto-tuning and specify these variances yourself. 
+You can check convergence of the MCMC algorithm by <b>plotting the chains</b> from the unconstrained model.</p>
+
+
+
+
+</body>
+</html>
