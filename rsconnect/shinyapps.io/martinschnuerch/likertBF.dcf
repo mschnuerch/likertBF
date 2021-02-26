@@ -1,0 +1,13 @@
+name: likertBF
+title: likertBF
+username:
+account: martinschnuerch
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3703657
+bundleId: 4275531
+url: https://martinschnuerch.shinyapps.io/likertBF/
+when: 1614349167.42648
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: README.md

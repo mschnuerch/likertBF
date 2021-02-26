@@ -45,7 +45,7 @@ shinyUI(
         # Customize Notification
         tags$head(tags$style("
                              .shiny-notification{
-                             position: fixed; top: 40% ;left: 43%; 
+                             position: fixed; top: 40% ;left: 42%; 
                              opacity: 1;
                              width: 350px;
                              height: 75px;
@@ -160,9 +160,9 @@ shinyUI(
                            # Variance of alpha proposal distribution
                            numericInputIcon(
                                "tune1", label = NULL,
-                               value = .0005,
+                               value = .00005,
                                min = 0,
-                               step = .0005,
+                               step = .00005,
                                icon = list("\\( \\alpha \\)"),
                                help_text = "Must be positive."
                            )
