@@ -152,7 +152,8 @@ shinyUI(
                 p(strong("Variance of proposal distributions"), br(),
                   "Specify the variances for the proposal distributions of the",
                   "Metropolis-Hastings sampling algorithm. If 'Auto-tuning' is selected,",
-                  "the values represent lower bounds on the variances."),
+                  "the values represent lower bounds on the variances. Set the",
+                  "maximum number of iterations in the tuning phase."),
                 
                 fluidRow(
                     column(width = 6,
@@ -160,9 +161,9 @@ shinyUI(
                            # Variance of alpha proposal distribution
                            numericInputIcon(
                                "tune1", label = NULL,
-                               value = 5e-5,
+                               value = 5e-4,
                                min = 0,
-                               step = 5e-5,
+                               step = 5e-4,
                                icon = list("\\( \\alpha \\)"),
                                help_text = "Must be positive."
                            )
@@ -173,19 +174,38 @@ shinyUI(
                            # Variance of theta proposal distribution
                            numericInputIcon(
                                "tune2", label = NULL,
-                               value = 5e-5,
+                               value = 5e-4,
                                min = 0,
-                               step = 5e-5,
+                               step = 5e-4,
                                icon = list("\\( \\theta \\)"),
                                help_text = "Must be positive."
                            )
                     )
                 ),
                 
-                # Logical; Auto-tune variances of proposal distributions?
-                materialSwitch(
-                    "tuning", "Auto-tuning", 
-                    status = "primary", right = TRUE, value = TRUE),
+                fluidRow(
+                    column(width = 6, 
+                           
+                           # Logical; Auto-tune variances of proposal distributions?
+                           materialSwitch(
+                               "tuning", "Auto-tuning", 
+                               status = "primary", right = T, value = TRUE,
+                               inline = T, width = "200px"
+                           )
+                    ),
+                    
+                    column(width = 6, 
+                           
+                           # max Iterations of tuning process
+                           numericInputIcon(
+                               "max_iter", label = NULL,
+                               value = 100,
+                               min = 10,
+                               step = 1,
+                               icon = list("max Iterations")
+                           )
+                    )
+                ),
                 
                 hr(),
                 

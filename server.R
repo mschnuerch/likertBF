@@ -157,6 +157,7 @@ shinyServer(function(input, output, session) {
         
         b <- c(input$b1, input$b2)
         M <- input$M
+        max_iter <- input$max_iter
         
         if(input$tuning){
             small <- c(input$tune1, input$tune2)
@@ -166,7 +167,7 @@ shinyServer(function(input, output, session) {
             tune = c(input$tune1, input$tune2)
         }
         
-        likertBF(dat, b, M, tune, small, updateProgress)
+        likertBF(dat, b, M, tune, small, max_iter, updateProgress)
         
     })
     

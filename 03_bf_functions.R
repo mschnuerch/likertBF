@@ -2,7 +2,7 @@
 ##           likertBF           ##
 ## =============================##
 
-likertBF <- function(dat, b, M, tune, small, updateProgress){
+likertBF <- function(dat, b, M, tune, small, max_iter, updateProgress){
   k <- length(dat$Y1) - 1
   pars0 <- paste0("a", 1:k) # parameters in null model
   pars1 <- c(pars0, "t") # parameters in shift model
@@ -22,19 +22,19 @@ likertBF <- function(dat, b, M, tune, small, updateProgress){
   
   # NULL MODEL
   updateProgress(value = .05, detail = "Sampling from Null Model")
-  mcmc0_full <- sample0(dat, b, M, tune, small)
+  mcmc0_full <- sample0(dat, b, M, tune, small, max_iter)
   mcmc0 <- mcmc0_full$alpha
   colnames(mcmc0) <- pars0
   
   # SHIFT MODEL
   updateProgress(value = .3, detail = "Sampling from Shift Model")
-  mcmc1_full <- sample1(dat, b, M, tune, small)
+  mcmc1_full <- sample1(dat, b, M, tune, small, max_iter)
   mcmc1 <- cbind(mcmc1_full$alpha, mcmc1_full$theta)
   colnames(mcmc1) <- pars1
   
   # UNCONSTRAINED MODEL
   updateProgress(value = .55, detail = "Sampling from Unconstrained Model")
-  mcmcU_full <- sampleU(dat, b, M, tune, small)
+  mcmcU_full <- sampleU(dat, b, M, tune, small, max_iter)
   mcmcU <- cbind(mcmcU_full$alpha, mcmcU_full$theta)
   colnames(mcmcU) <- parsU
   

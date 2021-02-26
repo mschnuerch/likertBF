@@ -82,7 +82,7 @@ sample0_fixed <- function(dat, b, M, tune, start = NULL){
 }
 
 # sampler with automatic tuning mechanism
-sample0 <- function(dat, b, M, tune, small){
+sample0 <- function(dat, b, M, tune, small, max_iter){
   
   if (!is.null(tune)) {
     out <- sample0_fixed(dat, b, M, tune)
@@ -94,7 +94,14 @@ sample0 <- function(dat, b, M, tune, small){
     )
     # adjust alpha
     tune <- small[1]
+    tune_counter <- 0
     repeat{
+      tune_counter <- tune_counter + 1
+      if(tune_counter > max_iter){
+        warning("Auto-tuning incomplete. Acceptance rates might not be optimal.
+        Adjust lower-bound variances or increase the number of iterations.")
+        break
+      }
       tmp <- sample0_fixed(dat, b, M = M0, tune = tune, start = start)
       if(tmp$accpt < .35){
         if(tmp$accpt < .3){
@@ -153,7 +160,7 @@ sample1_fixed <- function(dat, b, M, tune, start = NULL){
 }
 
 # sampler with automatic tuning mechanism
-sample1 <- function(dat, b, M, tune, small){
+sample1 <- function(dat, b, M, tune, small, max_iter){
   
   if (!is.null(tune)){
     out <- sample1_fixed(dat, b, M, tune)
@@ -166,16 +173,30 @@ sample1 <- function(dat, b, M, tune, small){
     )
     # adjust alpha
     tune <- c(small[1], .02)
+    tune_counter <- 1
     repeat{
       tmp <- sample1_fixed(dat, b, M = M0, tune = tune, start = start)
       if(tmp$accpt < .5) 
         break
       tune[1] <- tune[1] * 2
+      tune_counter <- tune_counter + 1
+      if(tune_counter > max_iter){
+        warning("Auto-tuning incomplete. Acceptance rates might not be optimal.
+        Adjust lower-bound variances or increase the number of iterations.")
+        break
+      }
     }
     
     #adjust theta
     tune <- c(tune[1], small[2])
+    tune_counter <- 0
     repeat{
+      tune_counter <- tune_counter + 1
+      if(tune_counter > max_iter){
+        warning("Auto-tuning incomplete. Acceptance rates might not be optimal.
+        Adjust lower-bound variances or increase the number of iterations.")
+        break
+      }
       tmp <- sample1_fixed(dat, b, M = M0, tune = tune, start = start)
       if(tmp$accpt < .35){
         if(tmp$accpt < .3){
@@ -233,7 +254,7 @@ sampleU_fixed <- function(dat, b, M, tune, start = NULL){
 }
 
 # sampler with automatic tuning mechanism
-sampleU <- function(dat, b, M, tune, small){
+sampleU <- function(dat, b, M, tune, small, max_iter){
   
   if (!is.null(tune)){
     out <- sampleU_fixed(dat, b, M, tune)
@@ -247,16 +268,30 @@ sampleU <- function(dat, b, M, tune, small){
     
     # adjust alpha
     tune <- c(small[1], .02)
+    tune_counter <- 1
     repeat{
       tmp <- sampleU_fixed(dat, b, M = M0, tune = tune, start = start)
       if(tmp$accpt < .5) 
         break
       tune[1] <- tune[1] * 2
+      tune_counter <- tune_counter + 1
+      if(tune_counter > max_iter){
+        warning("Auto-tuning incomplete. Acceptance rates might not be optimal.
+        Adjust lower-bound variances or increase the number of iterations.")
+        break
+      }
     }
     
     #adjust theta
     tune <- c(tune[1], small[2])
+    tune_counter <- 0
     repeat{
+      tune_counter <- tune_counter + 1
+      if(tune_counter > max_iter){
+        warning("Auto-tuning incomplete. Acceptance rates might not be optimal.
+        Adjust lower-bound variances or increase the number of iterations.")
+        break
+      }
       tmp <- sampleU_fixed(dat, b, M = M0, tune = tune, start = start)
       if(tmp$accpt < .35){
         if(tmp$accpt < .3){
