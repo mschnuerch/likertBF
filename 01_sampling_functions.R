@@ -20,14 +20,14 @@ logPost1 <- function(par, data, b){
   I <- length(data$Y1)
   alpha <- par[1:(I - 1)]
   theta <- par[I]
-  c1 <- c(-Inf, alpha + theta, Inf)
-  c2 <- c(-Inf, alpha - theta, Inf)
+  c1 <- c(-Inf, alpha + .5 * theta, Inf)
+  c2 <- c(-Inf, alpha - .5 * theta, Inf)
   prob1 <- diff(pnorm(c1))
   prob2 <- diff(pnorm(c2))
   ans <- sum(data$Y1 * log(prob1)) + 
     sum(data$Y2 * log(prob2)) -
     sum(alpha^2) / (2 * b[1]) -
-    sum(theta^2) / (2 * b[2])
+    sum((.5 * theta)^2) / (2 * b[2])
   return(ans)
 }
 
@@ -38,14 +38,14 @@ logPostU <- function(par, data, b){
   I <- length(data$Y1)
   alpha <- par[1:(I - 1)]
   theta <- par[I:(2 * I - 2)]
-  c1 <- c(-Inf, alpha + theta, Inf)
-  c2 <- c(-Inf, alpha - theta, Inf)
+  c1 <- c(-Inf, alpha + .5 * theta, Inf)
+  c2 <- c(-Inf, alpha - .5 * theta, Inf)
   prob1 <- diff(pnorm(c1))
   prob2 <- diff(pnorm(c2))
   ans <- sum(data$Y1 * log(prob1)) + 
     sum(data$Y2 * log(prob2)) -
     sum(alpha^2) / (2 * b[1]) -
-    sum(theta^2) / (2 * b[2])
+    sum((.5 * theta)^2) / (2 * b[2])
   return(ans)
 }
 
@@ -142,8 +142,8 @@ sample1_fixed <- function(dat, b, M, tune, start = NULL){
     theta[m] <- theta[m - 1]
     candAlpha <- rnorm(I - 1, alpha[m,], sqrt(tune[1]))
     candTheta <- rnorm(1, theta[m], sqrt(tune[2]))
-    c1 <- candAlpha + candTheta
-    c2 <- candAlpha - candTheta
+    c1 <- candAlpha + .5 * candTheta
+    c2 <- candAlpha - .5 * candTheta
     if (mean(diff(c1) > 0) == 1 & 
         mean(diff(c2) > 0) == 1 &
         mean(diff(candAlpha) > 0) == 1){
@@ -236,8 +236,8 @@ sampleU_fixed <- function(dat, b, M, tune, start = NULL){
     theta[m,] <- theta[m - 1,]
     candAlpha <- rnorm(I - 1, alpha[m,], sqrt(tune[1]))
     candTheta <- rnorm(I - 1, theta[m,], sqrt(tune[2]))
-    c1 <- candAlpha + candTheta
-    c2 <- candAlpha - candTheta
+    c1 <- candAlpha + .5 * candTheta
+    c2 <- candAlpha - .5 * candTheta
     if (mean(diff(c1) > 0) == 1 & 
         mean(diff(c2) > 0) == 1 &
         mean(diff(candAlpha) > 0) == 1){
