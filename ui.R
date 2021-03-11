@@ -55,7 +55,7 @@ shinyUI(
         add_busy_spinner(spin = "orbit", position = "bottom-right"),
         
         # Application title
-        titlePanel("likertBF: Bayes Factors for Ordinal Scales"),
+        titlePanel("Bayes Factors for Ordinal Scales"),
         
         hr(),
         
@@ -107,37 +107,45 @@ shinyUI(
                 
                 h4("Prior Settings"),
                 
-                p("Specify the prior variances \\( b_1 \\) and \\( b_2 \\) on",
+                p("Specify the prior standard deviations \\( b_\\alpha \\) and \\( b_\\theta \\) on",
                   "\\( \\alpha_j\\) and \\( \\theta_j\\), respectively."),
                 
                 fluidRow(
                     column(
                         width = 6,
                         
-                        # Prior variance on alpha
+                        # Prior sd on alpha
                         numericInputIcon(
                             "b1", label = NULL,
                             value = 1,
                             min = 0,
                             step = .1,
-                            icon = list("\\( b_1 \\)"),
+                            icon = list("\\( b_\\alpha \\)"),
                             help_text = "Must be positive."
                         )
                     ),
                     column(
                         width = 6,
                         
-                        # Prior variance on theta
+                        # Prior sd on theta
                         numericInputIcon(
                             "b2", label = NULL,
-                            value = .1,
+                            value = 0.33,
                             min = 0,
                             step = .01,
-                            icon = list("\\( b_2 \\)"),
+                            icon = list("\\( b_\\theta \\)"),
                             help_text = "Must be positive."
                         )
                     )
                 ),
+                
+                # Stochastic dominance directed or two-sided
+                prettyRadioButtons(
+                    "dominance", "Stochastic Dominance", 
+                    choices = c("two-sided" = "two",
+                                "1 > 2" = "1_2",
+                                "2 > 1" = "2_1"),
+                    selected = "two", inline = T),
                 
                 hr(),
                 
@@ -265,14 +273,6 @@ shinyUI(
                                    choices = c("against unconstrained Model" = "b_u",
                                                "against best Model" = "b_p"),
                                    selected = "b_u", inline = F),
-                               
-                               # Stochastic dominance directed or two-sided
-                               prettyRadioButtons(
-                                   "dominance", "Stochastic Dominance", 
-                                   choices = c("two-sided" = "two",
-                                               "1 > 2" = "1_2",
-                                               "2 > 1" = "2_1"),
-                                   selected = "two", inline = F),
                                
                                circle = TRUE, status = "danger", 
                                icon = icon("gear"), width = "250px",

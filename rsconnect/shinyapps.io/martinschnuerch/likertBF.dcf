@@ -5,6 +5,6 @@ account: martinschnuerch
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3703657
-bundleId: 4275962
+bundleId: 4330174
 url: https://martinschnuerch.shinyapps.io/likertBF/
-when: 1614356070.01761
+when: 1615454796.5799

@@ -9,7 +9,7 @@ logPost0 <- function(alpha, data, b){
   crit <- c(-Inf, alpha, Inf)
   prob <- diff(pnorm(crit))
   ans <- sum(data$Y1 * log(prob)) + sum(data$Y2 * log(prob)) - 
-    sum(alpha^2) / (2 * b[1])
+    sum(alpha^2) / (2 * b[1]^2)
   return(ans)
 }
 
@@ -26,8 +26,8 @@ logPost1 <- function(par, data, b){
   prob2 <- diff(pnorm(c2))
   ans <- sum(data$Y1 * log(prob1)) + 
     sum(data$Y2 * log(prob2)) -
-    sum(alpha^2) / (2 * b[1]) -
-    sum((.5 * theta)^2) / (2 * b[2])
+    sum(alpha^2) / (2 * b[1]^2) -
+    sum(theta^2) / (2 * b[2]^2)
   return(ans)
 }
 
@@ -44,8 +44,8 @@ logPostU <- function(par, data, b){
   prob2 <- diff(pnorm(c2))
   ans <- sum(data$Y1 * log(prob1)) + 
     sum(data$Y2 * log(prob2)) -
-    sum(alpha^2) / (2 * b[1]) -
-    sum((.5 * theta)^2) / (2 * b[2])
+    sum(alpha^2) / (2 * b[1]^2) -
+    sum(theta^2) / (2 * b[2]^2)
   return(ans)
 }
 

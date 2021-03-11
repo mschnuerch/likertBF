@@ -259,7 +259,6 @@ shinyServer(function(input, output, session) {
         if(input$show_data == 0){
             return()
         }else{
-            
             tmp <- check_data_plot()
             if(tmp$error){
                 shinyalert("Oops...",
