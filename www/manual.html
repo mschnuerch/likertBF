@@ -17,8 +17,8 @@ ul {
 
 <p><b>Welcome!</b></p>
 
-<p>With this Shiny app, you can calculate <b>Bayes factors</b> for two distributions 
-on some ordinal (e.g., Likert-type) items. To analyze your data, you must enter the <b>observed category frequencies</b> 
+<p>With this Shiny app, you can calculate <b>Bayes factors</b> for the comparison of two distributions 
+on an ordinal (e.g., Likert) item. To analyze your data, you must enter the <b>observed category frequencies</b> 
 for each condition in the first step. The frequencies must be separated by a , (you can also use ; or /). 
 You can <b>plot the data</b> by clicking on the respective button. This
 will create an ROC-type plot and a difference plot for the cumulative
@@ -28,31 +28,27 @@ which will appear in the plot.</p>
 <p>The data are modeled as a latent normal distribution where response categories
 correspond to ordered regions on the latent scale (as in SDT). Response
 probabilities correspond to the areas of the latent regions under the curve, 
-and the parameters of interest are the bounds of these regions in each condition. 
-Each bound in each condition is modeled as some grand mean (alpha) and a specific difference
+and the parameters of interest are the thresholds of these regions in each condition. 
+Each threshold in each condition is modeled as some grand mean threshold (alpha) and a specific difference
 between conditions (theta).</p>
 
 <p>We specify four statistical models:</p>
 
  <ul>
-  <li><b>Unconstrained Model:</b> No constraints on theta (there is an effect of condition but it's not 
-  captured by one relation)</li>
-  <li><b>Dominance Model:</b> All thetas are positive/negative (there is an effect in one direction)</li>
-  <li><b>Shift Model:</b> There is one theta for all bounds (there is a constant effect)</li>
-  <li><b>Null Model:</b> Theta is 0 (there is no difference between conditions)</li>
+  <li><b>Unconstrained Model:</b> No constraints on theta (this model can account for any relationship between response distributions)</li>
+  <li><b>Dominance Model:</b> All thetas are positive/negative (one response distribution stochastically dominates the other)</li>
+  <li><b>Shift Model:</b> There is one theta for all thresholds (there is a simple effect that may be captured by a shift in probit space)</li>
+  <li><b>Null Model:</b> Theta is 0 (there is no difference in response distributions between conditions)</li>
 </ul> 
 
 <p>To compare these models by means of Bayes factors, you need to specify <b>priors</b>
 on the alphas and thetas. These are centered normal distributions with standard deviation 
-b<sub>alpha</sub> and b<sub>theta</sub>. Define these variances to express your prior beliefs.
+b<sub>alpha</sub> and b<sub>theta</sub>. Define these standard deviations to express your prior beliefs.
 <b>Note that you must carefully choose the prior settings for the case
-at hand</b>. Your choice will affect your conclusions (as it should). </p>
+at hand</b>. Your choice will affect your conclusions. </p>
 
-<p>You can also specify the settings of the MCMC sampling algorithm. The number of 
-posterior samples must be sufficiently high (e.g., 200,000). By default, the variances of the
-proposal distributions will be tuned before the sampling process to achieve an acceptance
-rate of about 30%. Optionally, you can disable auto-tuning and specify these variances yourself. 
-You can check convergence of the MCMC algorithm by <b>plotting the chains</b> from the unconstrained model.</p>
+<p>You can also specify the settings of the MCMC sampling algorithm. The total number of 
+posterior samples must be sufficiently high (e.g., 100,000). You can set the number of chains per parameter (default: 4) and the number of warmup (default: 5000) and posterior samples (default: 25,000). You can check convergence of the MCMC algorithm by <b>plotting posterior samples</b> from the unconstrained model. For each parameter, the chain of samples should look <b>like a hairy caterpillar</b>.</p>
 
 
 

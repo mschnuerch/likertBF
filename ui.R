@@ -35,7 +35,7 @@ shinyUI(
     fluidPage(
         theme = shinytheme("cerulean"),
         
-        useShinyalert(),
+        # useShinyalert(),
         useShinydashboard(),   
         withMathJax(),
         useShinyjs(),
@@ -73,13 +73,13 @@ shinyUI(
                 # Frequencies in Condition 1
                 textInputIcon("Y1",
                               label = "Condition 1",
-                              placeholder = "20, 20, 20, 20",
+                              placeholder = "EXAMPLE: 20, 20, 20, 20",
                               icon = list("Frequencies")),
                 
                 # Frequencies in Condition 2
                 textInputIcon("Y2",
                               label = "Condition 2",
-                              placeholder = "20, 20, 20, 20",
+                              placeholder = "EXAMPLE: 20, 20, 20, 20",
                               icon = list("Frequencies")),
                 
                 # Logical; Provide category labels?
@@ -93,7 +93,7 @@ shinyUI(
                     "input.labels == true",
                     textInputIcon("cats", 
                                   label = NULL,
-                                  placeholder = "never, rarely, often, always",
+                                  placeholder = "EXAMPLE: never, rarely, often, always",
                                   icon = list("Labels"))
                 ),
                 
@@ -151,68 +151,26 @@ shinyUI(
                 
                 h4("MCMC Settings"),
                 
+                p("Specify the settings of the MCMC algorithm: Number of",
+                  "chains, number of warmup samples per chain, and number",
+                  "of posterior samples per chain (excluding warmup samples)."),
+                
+                # Number of chains
+                numericInput(
+                  "chains", label = "Number of MCMC chains",
+                  value = 4
+                ),
+                
                 # Number of posterior samples, M
                 numericInput(
-                    "M", label = "Number of posterior samples",
-                    value = 2e5
+                    "iter", label = "Number of posterior samples (per chain)",
+                    value = 25000
                 ),
                 
-                p(strong("Variance of proposal distributions"), br(),
-                  "Specify the variances for the proposal distributions of the",
-                  "Metropolis-Hastings sampling algorithm. If 'Auto-tuning' is selected,",
-                  "the values represent lower bounds on the variances. Set the",
-                  "maximum number of iterations in the tuning phase."),
-                
-                fluidRow(
-                    column(width = 6,
-                           
-                           # Variance of alpha proposal distribution
-                           numericInputIcon(
-                               "tune1", label = NULL,
-                               value = 5e-4,
-                               min = 0,
-                               step = 5e-4,
-                               icon = list("\\( \\alpha \\)"),
-                               help_text = "Must be positive."
-                           )
-                    ),
-                    
-                    column(width = 6,
-                           
-                           # Variance of theta proposal distribution
-                           numericInputIcon(
-                               "tune2", label = NULL,
-                               value = 5e-4,
-                               min = 0,
-                               step = 5e-4,
-                               icon = list("\\( \\theta \\)"),
-                               help_text = "Must be positive."
-                           )
-                    )
-                ),
-                
-                fluidRow(
-                    column(width = 6, 
-                           
-                           # Logical; Auto-tune variances of proposal distributions?
-                           materialSwitch(
-                               "tuning", "Auto-tuning", 
-                               status = "primary", right = T, value = TRUE,
-                               inline = T, width = "200px"
-                           )
-                    ),
-                    
-                    column(width = 6, 
-                           
-                           # max Iterations of tuning process
-                           numericInputIcon(
-                               "max_iter", label = NULL,
-                               value = 100,
-                               min = 10,
-                               step = 1,
-                               icon = list("max Iterations")
-                           )
-                    )
+                # Number of posterior samples, M
+                numericInput(
+                  "warmup", label = "Number of warmup samples (per chain)",
+                  value = 5000
                 ),
                 
                 hr(),
@@ -275,7 +233,7 @@ shinyUI(
                                    selected = "b_u", inline = F),
                                
                                circle = TRUE, status = "danger", 
-                               icon = icon("gear"), width = "250px",
+                               icon = icon("cog"), width = "250px",
                                size = "xs", 
                                tooltip = tooltipOptions(title = "Output Options")
                            ),

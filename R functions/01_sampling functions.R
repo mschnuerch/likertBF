@@ -181,6 +181,8 @@ sample1_fixed <- function(dat, b, M, tune, start = NULL, progress = FALSE){
 # sampler with automatic tuning mechanism
 sample1 <- function(dat, b, M, tune, small, progress){
   
+  I <- length(dat$Y1)
+  
   if (!is.null(tune)){
     if(progress)
       cat("  Sampling from posterior\n")
@@ -208,9 +210,12 @@ sample1 <- function(dat, b, M, tune, small, progress){
     tune <- c(tune[1], small[2])
     repeat{
       tmp <- sample1_fixed(dat, b, M = M0, tune = tune, start = start)
+      print(tmp$accpt)
       if(tmp$accpt < .35){
         if(tmp$accpt < .3){
           tune[2] <- tune[2] - tune[2] / 10
+          start$alpha <- sort(rnorm(I - 1))
+          start$theta <- 0
           next
         }else{
           break

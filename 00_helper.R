@@ -30,7 +30,7 @@ get_cats <- function(x){
     unlist()
 }
 
-check_input_bf <- function(Y1, Y2, b1, b2, tune1, tune2, M){
+check_input_bf <- function(Y1, Y2, b1, b2, chains, iter, warmup){
   
   mssge <- character(0)
   err <- FALSE
@@ -61,21 +61,23 @@ check_input_bf <- function(Y1, Y2, b1, b2, tune1, tune2, M){
     }
   }
   
-  tune1_check <- check_numeric(tune1,
-                               lower = 0, any.missing = F, all.missing = F)
-  tune2_check <- check_numeric(tune2,
-                               lower = 0, any.missing = F, all.missing = F)
-  if(any(!isTRUE(tune1_check), !isTRUE(tune2_check))){
-    mssge <- c(mssge, "Please check variance settings on proposal distributions.")
+  chains_check <- check_integerish(chains,
+                                   lower = 1, any.missing = F, all.missing = F)
+  iter_check <- check_numeric(iter,
+                              lower = 1, any.missing = F, all.missing = F)
+  warmup_check <- check_numeric(warmup,
+                                lower = 1, any.missing = F, all.missing = F)
+  
+  if(any(!isTRUE(chains_check), !isTRUE(warmup_check))){
+    mssge <- c(mssge, "Please check MCMC settings.")
     err <- TRUE
   }
   
-  M_check <- check_numeric(M, lower = 0, any.missing = F)
-  if(!isTRUE(M_check)){
+  if(!isTRUE(iter_check)){
     mssge <- c(mssge, "Please check the number of posterior samples.")
     err <- TRUE
-  }else if(M < 10000){
-    wrng <- "Number of posterior samples is small. Consider increasing."
+  }else if((iter * chains) < 10000){
+    wrng <- "Total No of posterior samples is small. Consider increasing."
   }
   
   mssge <- paste(mssge, collapse = "\n")

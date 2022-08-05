@@ -88,7 +88,7 @@ mcmc_plot <- function(x){
           , cex.lab = 1
           , cex.axis = 1
           , cex.main = 1.5
-          , main = expression(alpha)
+          , main = expression(alpha[j])
           , lwd = 2)
   abline(h = colMeans(alpha)
          , lty = "dashed"
@@ -103,7 +103,7 @@ mcmc_plot <- function(x){
           , cex.axis = 1
           , cex.main = 1.5
           , lwd = 2
-          , main = expression(theta))
+          , main = expression(theta[j]))
   abline(h = colMeans(theta)
          , lty = "dashed"
          , col = 1:ncol(theta)
